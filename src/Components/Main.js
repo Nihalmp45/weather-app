@@ -79,6 +79,60 @@ const Main = () => {
           <p className='date'>{formatDate(currentDateTime)}</p>
           </div>
         </div>
+        
+        <div className='card-container-right'>
+        <div className='card-right'>
+                <div className='top-heading'>
+                    Today's Average:
+                </div>
+                <div className='week-weather'>
+                    {`${details?.forecast?.forecastday[0]?.day?.avgtemp_c}°C`}
+                </div>
+        </div>
+        <div className='card-right'>
+                <div className='top-heading-date'>
+                {`${details?.forecast?.forecastday[1]?.date}`}
+                </div>
+                <div className='week-weather'>
+                    {`${details?.forecast?.forecastday[1]?.day?.avgtemp_c}°C`}
+                </div>
+        </div>
+        <div className='card-right'>
+                <div className='top-heading-date'>
+                {`${details?.forecast?.forecastday[2]?.date}`}
+                </div>
+                <div className='week-weather'>
+                    {`${details?.forecast?.forecastday[2]?.day?.avgtemp_c}°C`}
+                </div>
+        </div>
+        <div className='card-container-right'>
+                <div className='card-right-2nd'>
+                <div className='top-heading-date'>
+                {`${details?.forecast?.forecastday[3]?.date}`}
+                </div>
+                <div className='week-weather'>
+                    {`${details?.forecast?.forecastday[3]?.day?.avgtemp_c}°C`}
+                </div>
+                </div>
+                <div className='card-right-2nd'>
+                <div className='top-heading-date'>
+                {`${details?.forecast?.forecastday[4]?.date}`}
+                </div>
+                <div className='week-weather'>
+                    {`${details?.forecast?.forecastday[4]?.day?.avgtemp_c}°C`}
+                </div>
+                </div>
+                <div className='card-right-2nd'>
+                <div className='top-heading-date'>
+                {`${details?.forecast?.forecastday[5]?.date}`}
+                </div>
+                <div className='week-weather'>
+                    {`${details?.forecast?.forecastday[5]?.day?.avgtemp_c}°C`}
+                </div>
+                </div>
+        </div>
+        </div>
+        
     </>
   )
 }
