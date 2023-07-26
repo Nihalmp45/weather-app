@@ -1,39 +1,84 @@
-import React,{useState,useEffect} from 'react'
+import React, { useContext,useState,useEffect } from 'react'
+import { fetchContext } from '../App'
+import '../App.css'
 
 const Main = () => {
+    const details = useContext(fetchContext)
+    const [currentDateTime, setCurrentDateTime] = useState(new Date());
     
-    const [lat, setLat] = useState([]);
-    const [long, setLong] = useState([]);
-    const [data, setData] = useState([])
-    const api1=`http://api.weatherapi.com/v1/current.json?key=05bb476d81fe499cb6b130828232107&q=${lat},${long}`
-    const api2=`http://api.weatherapi.com/v1/forecast.json?key=05bb476d81fe499cb6b130828232107&q=${lat},${long}&days=7&alerts=yes`
-
-    useEffect(() => {
-        const fetchData = async () => {
-            navigator.geolocation.getCurrentPosition(function(position) {
-              setLat(position.coords.latitude);
-              setLong(position.coords.longitude);
-            });
-      
-            await fetch(api1)
-            .then(res => res.json())
-            .then(result => {
-              setData(result)
-              console.log(result);
-            });
-            await fetch(api2)
-            .then(res => res.json())
-            .then(result => {
-              setData(result)
-              console.log(result);
-            });
-          }
-          fetchData();
-        }, [lat,long])
-
+      useEffect(() => {
+        const interval = setInterval(() => {
+          setCurrentDateTime(new Date());
+        }, 1000); // Update every second
+    
+        return () => clearInterval(interval); // Clean up the interval on component unmount
+      }, []);
+    
+      const formatDate = (date) => {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString(undefined, options);
+      };
+    
+      const formatTime = (date) => {
+        return date.toLocaleTimeString();
+      };
+    
+    
     return (
     <>
-        Main
+        <div className='main'> 
+          {(typeof Main != 'undefined') ? 
+          (<div className='card'>
+            <div className='location-name'>
+          {details?.location?.name}
+            </div>
+            <div className='location-region'>
+          {`${details?.location?.region} ,   
+          ${details?.location?.country}`}
+            </div>
+            <div className='temperature'>
+            <div className='temperature-current'>
+             {details?.current?.temp_c <=35 && details?.current?.temp_c >=0 ? (
+                <>Current : {details?.current?.temp_c}°C 
+                {details?.current?.temp_c ?
+                <img className='happy-image' src='/Images/happiness.png' alt='happy'></img>:<p>hi</p>}
+                </>
+             ):details?.current?.temp_c >35 ?(
+                <>Current : {details?.current?.temp_c}°C 
+                {details?.current?.temp_c ?
+                <img className='happy-image' src='/Images/hot.png' alt='hot'></img>:<p>hi</p>}
+                </>
+
+             ):(
+              <>Current : {details?.current?.temp_c}°C 
+              {details?.current?.temp_c ?
+              <img className='happy-image' src='/Images/snowman.png' alt='snow'></img>:<p>hi</p>}
+              </>
+             )}
+
+             
+  
+            </div>
+            <div className='temperature-feel'>
+              {`Feels Like : ${details?.current?.feelslike_c}°C`}
+            </div>
+            <div className='temperature-wind'>
+              {`Wind Speed : ${details?.current?.wind_kph} km/hr`}
+            </div>
+            <div className='condition'>
+              {`Condition: ${details?.current?.condition?.text}`}
+            </div>
+            </div>
+
+          </div>)
+          :
+          <div> hi</div>}
+
+          <div className='date-time'>
+          <p className='time'>{formatTime(currentDateTime)}</p>
+          <p className='date'>{formatDate(currentDateTime)}</p>
+          </div>
+        </div>
     </>
   )
 }

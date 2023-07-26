@@ -1,20 +1,21 @@
 import React,{useState,useContext} from 'react'
 import '../App.css'
-
+import { fetchContext } from '../App'
 
 function Header() {
-    
-    const [city,setCity] = useState('london')
+    const details = useContext(fetchContext)
+    const [city,setCity] = useState('Kozhikode')
     
     const handleCity = (e) =>{
         setCity(e.target.value)
     }
     
   return (
-    <>
-        <div className='city'>Your City :</div>
-        <input type='text' className='header-textbox' value={city} onChange={handleCity}></input>
-    </>
+    <div> 
+          <div className='city'>Your City :</div>
+          <input type='text' className='header-textbox' value={details?.location?.name} onChange={handleCity}></input><div>
+          </div>
+    </div>
   )
 }
 
